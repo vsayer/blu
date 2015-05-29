@@ -42,12 +42,22 @@ blu -reset
 ```
 
 ## Features
-- [x] supports IPv4 and IPv6
-- [x] supports origin expecting ack for reliability
-- [x] ability to balance by finding least-loaded terminus
-- [x] ability to fix outgoing port on forwarder
-- [x] routes are preserved on exit
-- [x] routes can be reset
+* supports IPv4 and IPv6
+* supports origin expecting ack for reliability
+* ability to balance by finding least-loaded terminus
+* ability to fix outgoing port on forwarder
+* routes are preserved on exit
+* routes can be reset
+* travis-ci integration
+* godoc integration
+
+## Build
+If you want to develop blu, a Makefile is included and building is straightforward.
+```shell
+make
+```
+
+## Roadmap for v1.0
 - [ ] origins require ack (send back on forwarder)
 ```shell
 blu -host=<host> -port=<port> -termini=<comma-separated host:port list> \
@@ -59,25 +69,17 @@ blu -host=<host> -port=<port> -termini=<comma-separated host:port list> \
 -ack-forward -udp-forward-port=<port>
 ```
 - [ ] unit tests courtesy of [GoConvey](http://goconvey.co/)
-- [x] travis-ci integration
-- [x] godoc integration
 - [ ] readthedocs integration for use cases
 - [ ] peformance profiling
-- [ ] refactor and lint for more idiomatic code
+- [ ] lint for more idiomatic code
+- [ ] refactor for more idiomatic code
 - [ ] logo
-
-## Build
-If you want to develop blu, a Makefile is included and building is straightforward.
-```shell
-make
-```
-
-## Roadmap for v1.0
-* adhoc mode: add or delete termini on-the-fly
-* auto-rebalancing: for when termini go offline
-* yml configuration
-* init service
-* [dockerization](https://docs.docker.com/userguide/dockerizing/)
+- [ ] adhoc mode: add or delete termini on-the-fly
+- [ ] IPv4 <-> IPv6 translation: origins and termini do not have to follow same protocol
+- [ ] auto-rebalancing: for when termini go offline
+- [ ] yml configuration
+- [ ] init service
+- [ ] [dockerization](https://docs.docker.com/userguide/dockerizing/)
 
 ## Ideation for beyond v1.0
 * companion REPL client
