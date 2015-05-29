@@ -59,7 +59,7 @@ blu -host=<host> -port=<port> -termini=<comma-separated host:port list> \
 -ack-forward -udp-forward-port=<port>
 ```
 - [ ] unit tests courtesy of [GoConvey](http://goconvey.co/)
-- [x ] travis-ci integration
+- [x] travis-ci integration
 - [x] godoc integration
 - [ ] readthedocs integration for use cases
 - [ ] peformance profiling
