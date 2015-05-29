@@ -1,4 +1,7 @@
 # blu
+
+[![GoDoc](https://godoc.org/github.com/vsayer/blu?status.svg)](https://godoc.org/github.com/vsayer/blu) [![Build Status](https://travis-ci.org/vsayer/blu.svg?branch=master)](https://travis-ci.org/vsayer/blu)
+
 *Balance the Load for UDP*
 
 Blu balances a UDP traffic load coming from a set of origins destined for a set of termini. In short, it is a **UDP Load Balancing Router**.
@@ -56,10 +59,11 @@ blu -host=<host> -port=<port> -termini=<comma-separated host:port list> \
 -ack-forward -udp-forward-port=<port>
 ```
 - [ ] unit tests courtesy of [GoConvey](http://goconvey.co/)
-- [ ] travis-ci integration
-- [ ] godoc integration
+- [x ] travis-ci integration
+- [x] godoc integration
+- [ ] readthedocs integration for use cases
 - [ ] peformance profiling
-- [ ] refactor for more idiomatic code
+- [ ] refactor and lint for more idiomatic code
 - [ ] logo
 
 ## Build
