@@ -1,7 +1,7 @@
 # blu
 *Balance the Load for UDP*
 
-Blu balances a UDP traffic load coming from a set of origins destined for a set of termini. In short, it is a **UDP Load Balancer**.
+Blu balances a UDP traffic load coming from a set of origins destined for a set of termini. In short, it is a **UDP Load Balancing Router**.
 
 ## Install
 Install blu as you would any other Go program:
