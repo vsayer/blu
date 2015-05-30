@@ -192,14 +192,14 @@ func ForwardACK(ackPort string, originConn *net.UDPConn, originChannel chan *net
 
 	// start event loop
 	for {
-		_, terminus, err := conn.ReadFromUDP(ack)
+		n, terminus, err := conn.ReadFromUDP(ack)
 		CheckError(err)
 		if terminus != nil { // TODO: does terminus come from termini?
 			// dequeue a origin address from the originChannel
 			originAddr := <- originChannel
 
 			// send ack to originAddron originConn
-			_, err = originConn.WriteTo(ack, originAddr)
+			_, err = originConn.WriteTo(ack[0:n], originAddr)
 			CheckError(err)
 		}
 	}
@@ -243,17 +243,17 @@ func BalanceLoadUDP(termini, routesJsonPath, port, ackPort string, ackForward bo
 
 				// call BlockingForwardUDP to handle contention
 				for {
-					_, origin, err := conn.ReadFromUDP(buf)
+					n, origin, err := conn.ReadFromUDP(buf)
 					CheckError(err)
 					terminus := DetermineTerminus(routesMap, origin.String())
-					go BlockingForwardUDP(terminus, buf, done)
+					go BlockingForwardUDP(terminus, buf[0:n], done)
 				}
 			} else { // no contention subcase
 				for {
-					_, origin, err := conn.ReadFromUDP(buf)
+					n, origin, err := conn.ReadFromUDP(buf)
 					CheckError(err)
 					terminus := DetermineTerminus(routesMap, origin.String())
-					go ForwardUDP(terminus, buf)
+					go ForwardUDP(terminus, buf[0:n])
 				}
 			}
 		}
@@ -273,25 +273,25 @@ func BalanceLoadUDP(termini, routesJsonPath, port, ackPort string, ackForward bo
 
 				// call BlockingForwardUDP to handle contention
 				for {
-					_, origin, err := conn.ReadFromUDP(buf)
+					n, origin, err := conn.ReadFromUDP(buf)
 					CheckError(err)
 
 					// push connection early to ensure ACK will get forwarded
 					originChannel <- origin
 
 					terminus := DetermineTerminus(routesMap, origin.String())
-					go BlockingForwardUDP(terminus, buf, done)
+					go BlockingForwardUDP(terminus, buf[0:n], done)
 				} 
 			} else { // no contention case
 				for {
-					_, origin, err := conn.ReadFromUDP(buf)
+					n, origin, err := conn.ReadFromUDP(buf)
 					CheckError(err)
 
 					// push connection early to ensure ACK will get forwarded
 					originChannel <- origin
 
 					terminus := DetermineTerminus(routesMap, origin.String())
-					go ForwardUDP(terminus, buf)
+					go ForwardUDP(terminus, buf[0:n])
 				}
 			}
 		}
