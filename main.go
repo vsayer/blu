@@ -15,12 +15,12 @@ import (
 
 // Declare global variables
 const MaxInt = int(^uint(0) >> 1)
-const MaxUdpSize = 2000 // TODO: arbitrary, make configurable?
-const MaxAckSize = 40 // TODO: arbitrary, make configurable?
-const OriginChannelSize = 1000 // TODO: arbitrary, make configurable?
 var host string
 var proto string
 var udpForwardPort string
+var originChannelSize int
+var maxUdpSize int
+var maxAckSize int
 var logger *log.Logger
 
 // Route consists of a Terminus and a slice of Origins
@@ -188,7 +188,7 @@ func ForwardACK(ackPort string, originConn *net.UDPConn, originChannel chan *net
 	defer conn.Close()
 
 	// set maximum payload per ACK packet
-	ack := make([]byte, MaxAckSize)
+	ack := make([]byte, maxAckSize)
 
 	// start event loop
 	for {
@@ -229,7 +229,7 @@ func BalanceLoadUDP(termini, routesJsonPath, port, ackPort string, ackForward bo
 	defer conn.Close()
 
 	// set maximum payload per UDP packet
-	buf := make([]byte, MaxUdpSize)
+	buf := make([]byte, maxUdpSize)
 
 	// start event loop
 	if ackForward == false {
@@ -261,7 +261,7 @@ func BalanceLoadUDP(termini, routesJsonPath, port, ackPort string, ackForward bo
 		if ackPort == "0" { // TODO: forward UDP, forward ACK
 			logger.Fatalln("FATAL: unimplemented! exiting!")
 		} else { // forward udp, forward ack + dedicated listener
-			originChannel := make(chan *net.UDPAddr, OriginChannelSize)
+			originChannel := make(chan *net.UDPAddr, originChannelSize)
 
 			// start ACK listener
 			go ForwardACK(ackPort, conn, originChannel)
@@ -318,6 +318,11 @@ func main() {
 	ackForwardPtr := flag.Bool("ack-forward", false, "forward ACK back to origin")
 	ackPortPtr := flag.String("ack-port", "0", "activate ACK listener to listen on specified port (same host)")
 
+	// tuning flags
+	originChannelSizePtr := flag.Int("origin-channel-size", 1000, "set size of ACK listener's origin channel")
+	maxUdpSizePtr := flag.Int("max-udp-size", 2000, "set maximum size of UDP packet")
+	maxAckSizePtr := flag.Int("max-ack-size", 40, "set maximum size of ACK packet")
+
 	// parse flags
 	flag.Parse()
 
@@ -325,6 +330,9 @@ func main() {
 	host = *hostPtr
 	proto = GetProto(host)
 	udpForwardPort = *udpForwardPortPtr
+	originChannelSize = *originChannelSizePtr
+	maxUdpSize = *maxUdpSizePtr
+	maxAckSize = *maxAckSizePtr
 	logFile, err := os.OpenFile(*logFilePtr, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("could not open log file for writing!")
