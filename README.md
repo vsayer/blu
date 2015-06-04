@@ -1,6 +1,6 @@
 # blu
 
-[![GoDoc](https://godoc.org/github.com/vsayer/blu?status.svg)](https://godoc.org/github.com/vsayer/blu) [![Build Status](https://travis-ci.org/vsayer/blu.svg?branch=master)](https://travis-ci.org/vsayer/blu)
+[![Build Status](https://travis-ci.org/vsayer/blu.svg?branch=master)](https://travis-ci.org/vsayer/blu) [![Coverage](http://gocover.io/_badge/github.com/vsayer/blu?0)](http://gocover.io/github.com/vsayer/blu) [![GoDoc](https://godoc.org/github.com/vsayer/blu?status.svg)](https://godoc.org/github.com/vsayer/blu)
 
 *Balance the Load for UDP*
 
@@ -48,8 +48,6 @@ blu -reset
 * ability to fix outgoing port on forwarder
 * routes are preserved on exit
 * routes can be reset
-* travis-ci integration
-* godoc integration
 
 ## Build
 If you want to develop blu, a Makefile is included and building is straightforward.
