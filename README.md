@@ -1,5 +1,7 @@
 # blu
 
+[![Join the chat at https://gitter.im/vsayer/blu](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vsayer/blu?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/vsayer/blu.svg?branch=master)](https://travis-ci.org/vsayer/blu) [![Coverage](http://gocover.io/_badge/github.com/vsayer/blu?0)](http://gocover.io/github.com/vsayer/blu) [![GoDoc](https://godoc.org/github.com/vsayer/blu?status.svg)](https://godoc.org/github.com/vsayer/blu)
 
 *Balance the Load for UDP*
